@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { create } from '../../controllers/post/create';
+import { findAll } from './findAll';
+import { create } from "./create";
 
 const router = Router();
 
 router.post('/post', create);
+router.get('/post', findAll);
 
 export default router;
