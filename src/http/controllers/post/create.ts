@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 export async function create(req: Request, res: Response) {
+    console.log('req.body:', req.body);
   const registerBodySchema = z.object({
     title: z.string(),
     content: z.string(),

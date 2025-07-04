@@ -1,4 +1,3 @@
-import { Post } from "@/entities/interface/postEntity";
 import { IFindAllPostRepository } from "@/repositories/interface/findAllPostRepositoryInterface";
 
 export class FindAllPostUseCase {
@@ -6,5 +5,7 @@ export class FindAllPostUseCase {
 
     async handler(page: number, limit: number){
         return this.findAllPostRepository.findAll(page, limit)
+
+        
     }
 }
