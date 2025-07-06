@@ -1,9 +1,14 @@
 import { IDeletePostRepository } from "@/repositories/interface/deletePostInterfaceRepository";
+import { ResourceNotFoundError } from "./errors/resourceNotFoundError";
 
 export class DeletePostUseCase {
-    constructor(private createPostRepository: IDeletePostRepository) {}
-
+    constructor(private deletePostRepository: IDeletePostRepository) {}
+  
     async handler(id: number): Promise<void> {
-        return this.createPostRepository.delete(id)
+      const deleted = await this.deletePostRepository.delete(id);
+  
+      if (!deleted) {
+        throw new ResourceNotFoundError();
+      }
     }
-}
+  }
