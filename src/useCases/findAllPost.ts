@@ -6,6 +6,5 @@ export class FindAllPostUseCase {
     async handler(page: number, limit: number){
         return this.findAllPostRepository.findAll(page, limit)
 
-        
     }
 }
