@@ -6,12 +6,8 @@ on:
       - main
 
 jobs:
-  build:
+  integration:
     runs-on: ubuntu-latest
-
-    env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +22,17 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+  build:
+    needs: integration
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Criar arquivo .env
         run: |
