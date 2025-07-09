@@ -1,6 +1,6 @@
-import { database } from "@/lib/pg/db";
-import { IPost } from "@/entities/models/postInterface";
-import { ISearchPostRepository } from "../interface/searchPostRepositoryInterface";
+import { database } from '@/lib/pg/db';
+import { IPost } from '@/entities/models/postInterface';
+import { ISearchPostRepository } from '../interface/searchPostRepositoryInterface';
 
 export class SearchPostRepository implements ISearchPostRepository {
     async search(keyWord: string, page: number, limit: number): Promise<IPost[]> {

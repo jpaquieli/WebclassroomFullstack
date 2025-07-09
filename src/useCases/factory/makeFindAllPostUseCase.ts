@@ -1,5 +1,5 @@
-import { FindAllPostRepository } from "@/repositories/pg/findAllPostRepository";
-import { FindAllPostUseCase } from "../findAllPost";
+import { FindAllPostRepository } from '@/repositories/pg/findAllPostRepository';
+import { FindAllPostUseCase } from '../findAllPost';
 
 export function makeFindAllPostUseCase() {
   const findAllPostRepository = new FindAllPostRepository();

@@ -1,5 +1,5 @@
-import { IEditRepository } from "@/repositories/interface/editPostRepositoryInterface";
-import { ResourceNotFoundError } from "./errors/resourceNotFoundError";
+import { IEditRepository } from '@/repositories/interface/editPostRepositoryInterface';
+import { ResourceNotFoundError } from './errors/resourceNotFoundError';
 
 export class EditPostUseCase {
   constructor(private editPostRepository: IEditRepository) {}

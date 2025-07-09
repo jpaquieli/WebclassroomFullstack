@@ -1,6 +1,6 @@
-import { database } from "@/lib/pg/db";
-import { IPost } from "@/entities/models/postInterface";
-import { ICreatePostRepository } from "../interface/createPostRepositoryInterface";
+import { database } from '@/lib/pg/db';
+import { IPost } from '@/entities/models/postInterface';
+import { ICreatePostRepository } from '../interface/createPostRepositoryInterface';
 
 export class CreatePostRepository implements ICreatePostRepository {
     async create ({    
@@ -12,8 +12,8 @@ export class CreatePostRepository implements ICreatePostRepository {
         const result = await database.clientInstance?.query(
             'INSERT INTO post (title, content, dateTime, author) VALUES ($1, $2, $3, $4) RETURNING *',
             [title, content, dateTime, author] 
-        )
+        );
 
-        return result?.rows[0]
+        return result?.rows[0];
     }
 }

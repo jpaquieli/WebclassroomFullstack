@@ -1,6 +1,6 @@
-import { makeCreatePostUseCase } from "@/useCases/factory/makeCreatePostUseCase";
-import { Request, Response } from "express";
-import { z } from "zod";
+import { makeCreatePostUseCase } from '@/useCases/factory/makeCreatePostUseCase';
+import { Request, Response } from 'express';
+import { z } from 'zod';
 
 export async function create(req: Request, res: Response) {
     console.log('req.body:', req.body);

@@ -1,6 +1,6 @@
-import { database } from "@/lib/pg/db";
-import { IPost } from "@/entities/models/postInterface";
-import { IFindPostByIdRepository } from "../interface/findPostByIdRepositoryInterface";
+import { database } from '@/lib/pg/db';
+import { IPost } from '@/entities/models/postInterface';
+import { IFindPostByIdRepository } from '../interface/findPostByIdRepositoryInterface';
 
 export class FindPostByIdRepository implements IFindPostByIdRepository {
     async findById(id: number): Promise<IPost> {

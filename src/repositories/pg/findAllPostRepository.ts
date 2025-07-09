@@ -1,6 +1,6 @@
-import { database } from "@/lib/pg/db";
-import { IPost } from "@/entities/models/postInterface";
-import { IFindAllPostRepository } from "../interface/findAllPostRepositoryInterface";
+import { database } from '@/lib/pg/db';
+import { IPost } from '@/entities/models/postInterface';
+import { IFindAllPostRepository } from '../interface/findAllPostRepositoryInterface';
 
 export class FindAllPostRepository implements IFindAllPostRepository {
     async findAll(page: number, limit: number): Promise<IPost[]> {

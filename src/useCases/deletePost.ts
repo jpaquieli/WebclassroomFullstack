@@ -1,5 +1,5 @@
-import { IDeletePostRepository } from "@/repositories/interface/deletePostInterfaceRepository";
-import { ResourceNotFoundError } from "./errors/resourceNotFoundError";
+import { IDeletePostRepository } from '@/repositories/interface/deletePostInterfaceRepository';
+import { ResourceNotFoundError } from './errors/resourceNotFoundError';
 
 export class DeletePostUseCase {
     constructor(private deletePostRepository: IDeletePostRepository) {}

@@ -1,6 +1,6 @@
-import { Pool, PoolClient } from 'pg'
-import "dotenv/config";
-import { env } from '@/env'
+import { Pool, PoolClient } from 'pg';
+import 'dotenv/config';
+import { env } from '@/env';
 
 const CONFIG = {
   user: env.DATABASE_USER,
@@ -8,31 +8,31 @@ const CONFIG = {
   database: env.DATABASE_NAME,
   password: env.DATABASE_PASSWORD,
   port: env.DATABASE_PORT,
-}
+};
 
 class Database {
-  private pool: Pool
-  private client: PoolClient | undefined
+  private pool: Pool;
+  private client: PoolClient | undefined;
 
   constructor() {
-    this.pool = new Pool(CONFIG)
-    this.connection()
+    this.pool = new Pool(CONFIG);
+    this.connection();
   }
 
   private async connection() {
     try {
-      this.client = await this.pool.connect()
-      console.log('Database connected.')
+      this.client = await this.pool.connect();
+      console.log('Database connected.');
     } catch (error) {
-      console.error(`Error connecting to database: ${error}`)
+      console.error(`Error connecting to database: ${error}`);
 
-      throw new Error(`Error connecting to database:${error}`)
+      throw new Error(`Error connecting to database:${error}`);
     }
   }
 
   get clientInstance() {
-    return this.client
+    return this.client;
   }
 }
 
-export const database = new Database()
+export const database = new Database();

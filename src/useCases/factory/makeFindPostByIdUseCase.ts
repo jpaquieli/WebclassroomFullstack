@@ -1,5 +1,5 @@
-import { FindPostByIdRepository } from "@/repositories/pg/findPostByIdRepository";
-import { FindPostByIdUseCase } from "../findPostById";
+import { FindPostByIdRepository } from '@/repositories/pg/findPostByIdRepository';
+import { FindPostByIdUseCase } from '../findPostById';
 
 export function makeFindPostByIdUseCase() {
     const findPostByIdRepository = new FindPostByIdRepository();

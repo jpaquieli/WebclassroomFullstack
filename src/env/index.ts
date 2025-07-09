@@ -1,4 +1,4 @@
-import "dotenv/config";
+import 'dotenv/config';
 
 import { z } from 'zod';
 
@@ -12,14 +12,14 @@ const envSchema = z.object({
   DATABASE_NAME: z.string(),
   DATABASE_PASSWORD: z.string(),
   DATABASE_PORT: z.coerce.number(),
-})
+});
 
 const _env = envSchema.safeParse(process.env);
 
 if (!_env.success) {
-    console.error("Invalid enviroment variables", _env.error.format());
+    console.error('Invalid enviroment variables', _env.error.format());
 
-    throw new Error("Invalid enviroment variables");
+    throw new Error('Invalid enviroment variables');
 }
 
 export const env = _env.data;

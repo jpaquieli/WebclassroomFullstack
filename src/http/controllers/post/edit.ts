@@ -1,6 +1,6 @@
-import { makeEditPostUseCase } from "@/useCases/factory/makeCreateEditPostUseCase";
-import { Request, Response } from "express";
-import { z } from "zod";
+import { makeEditPostUseCase } from '@/useCases/factory/makeCreateEditPostUseCase';
+import { Request, Response } from 'express';
+import { z } from 'zod';
 
 export async function edit(req: Request, res: Response) {
     const paramsSchema = z.object({
