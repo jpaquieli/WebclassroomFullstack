@@ -1,4 +1,3 @@
-import { Post } from "@/entities/interface/postEntity";
 import { IPost } from "@/entities/models/postInterface";
 import { IFindPostByIdRepository } from "@/repositories/interface/findPostByIdRepositoryInterface";
 import { ResourceNotFoundError } from "./errors/resourceNotFoundError";
