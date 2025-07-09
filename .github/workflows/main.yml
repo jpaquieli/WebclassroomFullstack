@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Lint
+        run: npm run lint
+
       - name: Criar arquivo .env
         run: |
           echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> .env
