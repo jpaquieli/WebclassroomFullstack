@@ -2,6 +2,6 @@ export interface IPost {
     id?: number
     title: string
     content: string
-    dateTime: Date
+    dateTime?: Date
     author: string
 }

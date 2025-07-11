@@ -6,12 +6,13 @@ export class CreatePostRepository implements ICreatePostRepository {
     async create ({    
         title,
         content,
-        dateTime,
         author,
     }: IPost): Promise<IPost> {
         const result = await database.clientInstance?.query(
-            'INSERT INTO post (title, content, dateTime, author) VALUES ($1, $2, $3, $4) RETURNING *',
-            [title, content, dateTime, author] 
+           `INSERT INTO post (title, content, dateTime, author)
+            VALUES ($1, $2, CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo', $3)
+            RETURNING *`,
+            [title, content, author] 
         );
 
         return result?.rows[0];
