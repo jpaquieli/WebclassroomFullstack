@@ -1,7 +1,12 @@
 import express from 'express';
-import routes  from './http/controllers/post/routes';
+import { validateJwt } from './http/middlewares/jwtValidate';
+import userRouter from './http/controllers/user/routes';
+import postRouter from './http/controllers/post/routes';
 
 export const app = express();
-
 app.use(express.json());
-app.use('/v1', routes);
+
+app.use(validateJwt);
+
+app.use('/v1', userRouter);
+app.use('/v1', postRouter);

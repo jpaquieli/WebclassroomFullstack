@@ -6,13 +6,13 @@ import { deletePost } from './delete';
 import { search } from './search';
 import { edit } from './edit';
 
-const router = Router();
+const postRouter = Router();
 
-router.post('/post', create);
-router.get('/post', findAll);
-router.get('/post/search', search);
-router.get('/post/:id', findById);
-router.put('/post/:id', edit);
-router.delete('/post/:id', deletePost);
+postRouter.post('/post', create);
+postRouter.get('/post', findAll);
+postRouter.get('/post/search', search);
+postRouter.get('/post/:id', findById);
+postRouter.put('/post/:id', edit);
+postRouter.delete('/post/:id', deletePost);
 
-export default router;
+export default postRouter;
