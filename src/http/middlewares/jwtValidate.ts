@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { env } from '@/env';
 import jwt from 'jsonwebtoken';
 
 export function validateJwt(req: Request, res: Response, next: NextFunction): void {
@@ -19,7 +20,7 @@ export function validateJwt(req: Request, res: Response, next: NextFunction): vo
       return;
     }
 
-    jwt.verify(token, 'your-secret-key');
+    jwt.verify(token, env.JWT_SECRET);
     next();
   } catch {
     res.status(401).send({ message: 'Unauthorized' });

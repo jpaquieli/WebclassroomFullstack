@@ -4,6 +4,7 @@ import { compare } from 'bcryptjs';
 import { Request, Response } from 'express';
 import { z } from 'zod';
 import jwt from 'jsonwebtoken';
+import { env } from '@/env';
 
 export async function signin(req: Request, res: Response) {
   const registerBodySchema = z.object({
@@ -23,7 +24,7 @@ export async function signin(req: Request, res: Response) {
     throw new InvalidCredentialsError();
   }
 
-  const token = jwt.sign({ username }, 'your-secret-key', {
+  const token = jwt.sign({ username }, env.JWT_SECRET, {
     expiresIn: '1h',
   });
 
