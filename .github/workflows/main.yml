@@ -6,11 +6,16 @@ on:
       - main
 
 jobs:
-  integration:
+  CI:
     runs-on: ubuntu-latest
 
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -23,28 +28,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  build:
-    needs: integration
-    runs-on: ubuntu-latest
-
-    env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Criar arquivo .env
-        run: |
-          echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> .env
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
-          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-          echo "DATABASE_HOST=db" >> .env
-          echo "DATABASE_PORT=5432" >> .env
-          echo "PORT=3000" >> .env
-          echo "ENV=development" >> .env
-
       - name: Build Docker image
         run: docker build -t $DOCKER_USERNAME/webclassroom:latest .
 
@@ -53,3 +36,14 @@ jobs:
 
       - name: Push Docker image
         run: docker push $DOCKER_USERNAME/webclassroom:latest
+
+  CD:
+    needs: CI
+    runs-on: ubuntu-latest
+
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: curl -X POST $RENDER_DEPLOY_HOOK_URL
