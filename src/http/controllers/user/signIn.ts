@@ -14,6 +14,7 @@ export async function signin(req: Request, res: Response) {
 
   const { username, password } = registerBodySchema.parse(req.body);
 
+
   const signinUseCase = makeSigninUseCase();
 
   const user = await signinUseCase.handler(username);
