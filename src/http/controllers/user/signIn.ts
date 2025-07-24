@@ -19,13 +19,15 @@ export async function signin(req: Request, res: Response) {
 
   const user = await signinUseCase.handler(username);
 
+  const role = user.role;
+
   const doestPasswordMatch = await compare(password, user.password);
 
   if (!doestPasswordMatch) {
     throw new InvalidCredentialsError();
   }
 
-  const token = jwt.sign({ username }, env.JWT_SECRET, {
+  const token = jwt.sign({ username, role }, env.JWT_SECRET, {
     expiresIn: '1h',
   });
 

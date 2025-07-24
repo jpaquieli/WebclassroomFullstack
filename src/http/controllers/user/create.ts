@@ -7,18 +7,33 @@ export async function create(req: Request, res: Response) {
   const registerBodySchema = z.object({
     username: z.string(),
     password: z.string(),
-    role: z.string()
+    role: z
+      .string()
+      .transform((val) => val.toLowerCase())
+      .refine((val) => val === 'professor' || val === 'aluno', {
+        message: 'Role deve ser do tipo professor ou aluno',
+      }),
   });
 
-  const { username, password, role } = registerBodySchema.parse(req.body);
+  const parseResult = registerBodySchema.safeParse(req.body);
+
+  if (!parseResult.success) {
+    return res.status(400).json({
+      message: 'Erro de validação',
+      issues: parseResult.error.errors.map((e) => ({
+        path: e.path.join('.'),
+        message: e.message,
+      })),
+    });
+  }
+
+  const { username, password, role } = parseResult.data;
 
   const hashedPassword = await hash(password, 8);
 
-  const userWithHashedPassword = { username, password: hashedPassword, role};
-
   const createUserUseCase = makeCreateUserUseCase();
 
-  const user = await createUserUseCase.handler(userWithHashedPassword);
+  const user = await createUserUseCase.handler({ username, password: hashedPassword, role });
 
-  res.status(201).send({ id: user?.id, username: user?.username, role: user?.role });
+  res.status(200).send(`Usuário ${user?.username} criado.`);
 }

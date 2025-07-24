@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { z } from 'zod';
 
 export async function create(req: Request, res: Response) {
-    console.log('req.body:', req.body);
   const registerBodySchema = z.object({
     title: z.string(),
     content: z.string(),
@@ -19,5 +18,5 @@ export async function create(req: Request, res: Response) {
     author,
   });
 
-  res.status(201).send(post);
+  res.status(200).send(`Post de id ${post.id} criado.`);
 }

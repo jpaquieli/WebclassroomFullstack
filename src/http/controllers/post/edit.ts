@@ -18,5 +18,5 @@ export async function edit(req: Request, res: Response) {
     const editPostUseCase = makeEditPostUseCase();
     await editPostUseCase.handler(id, data);
   
-    res.status(204).send();
+    res.status(200).send(`Post de id ${id} editado.`);
   }

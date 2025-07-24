@@ -5,14 +5,16 @@ import { findById } from './findById';
 import { deletePost } from './delete';
 import { search } from './search';
 import { edit } from './edit';
+import { validateRole } from '@/http/middlewares/roleValidate';
 
 const postRouter = Router();
 
-postRouter.post('/post', create);
 postRouter.get('/post', findAll);
 postRouter.get('/post/search', search);
 postRouter.get('/post/:id', findById);
-postRouter.put('/post/:id', edit);
-postRouter.delete('/post/:id', deletePost);
+
+postRouter.post('/post', validateRole, create);
+postRouter.put('/post/:id', validateRole, edit);
+postRouter.delete('/post/:id', validateRole, deletePost);
 
 export default postRouter;
