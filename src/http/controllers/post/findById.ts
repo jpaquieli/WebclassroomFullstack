@@ -13,6 +13,6 @@ export async function findById(req: Request, res: Response) {
 
     const post = await findPostById.handler(id);
 
-    res.status(201).send(post);
+    res.status(200).send(post);
 
 }

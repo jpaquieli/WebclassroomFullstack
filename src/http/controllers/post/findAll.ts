@@ -14,5 +14,5 @@ export async function findAll(req: Request, res: Response) {
 
     const posts = await findAllPostUseCase.handler(page, limit);
 
-    res.status(201).send(posts);
+    res.status(200).send(posts);
 }

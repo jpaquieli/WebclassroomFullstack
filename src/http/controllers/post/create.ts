@@ -18,5 +18,5 @@ export async function create(req: Request, res: Response) {
     author,
   });
 
-  res.status(200).send(`Post de id ${post.id} criado.`);
+  res.status(201).send(`Post de id ${post.id} criado.`);
 }

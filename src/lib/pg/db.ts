@@ -35,6 +35,14 @@ class Database {
   get clientInstance() {
     return this.client;
   }
+
+  async close() {
+    if (this.client) {
+      this.client.release();
+      this.client = undefined;
+    }
+    await this.pool.end();
+  }
 }
 
 export const database = new Database();

@@ -15,5 +15,5 @@ export async function search(req: Request, res: Response) {
 
     const posts = await searchPostUseCase.handler(keyWord, page, limit);
 
-    res.status(201).send(posts);
+    res.status(200).send(posts);
 }
