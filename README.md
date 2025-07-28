@@ -148,8 +148,7 @@ npm test
 ```
 
 - Framework: **Jest**
-- Foco em: criação, edição e exclusão de postagens
-- Os testes são executados automaticamente na pipeline do **GitHub Actions**
+- Os testes são executados automaticamente na pipeline de CI do **GitHub Actions**
 
 ---
 
