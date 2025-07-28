@@ -2,28 +2,33 @@
 
 📝 Descrição do Projeto
 
-Esta plataforma foi desenvolvida para atender à demanda de professores da rede pública que não possuem ferramentas acessíveis para compartilhar conteúdos com seus alunos.
+A WebClassroom foi desenvolvida para atender à demanda de professores da rede pública que não possuem ferramentas acessíveis para compartilhar conteúdos com seus alunos.
 
-Com foco em tecnologia acessível, escalabilidade e praticidade, esta aplicação oferece uma interface para postagem e leitura de conteúdos educacionais.
+Com foco em tecnologia acessível, escalabilidade e praticidade, a aplicação oferece uma interface segura e moderna para postagem e leitura de conteúdos educacionais.
 
 ⸻
 
 🚀 Funcionalidades
-	•	✅ Criação de usuários de tipo professor e aluno
+	•	✅ Criação de usuários dos tipos professor e aluno
 	•	✅ Login de usuários via JWT
 	•	✅ Listagem de posts (alunos e professores)
 	•	✅ Leitura detalhada de um post (alunos e professores)
 	•	✅ Busca por título ou conteúdo (alunos e professores)
-	•	✅ Criação de postagens (professores)
-	•	✅ Edição de postagens (professores)
-	•	✅ Exclusão de postagens (professores)
+	•	✅ Criação de postagens (apenas professores)
+	•	✅ Edição de postagens (apenas professores)
+	•	✅ Exclusão de postagens (apenas professores)
 
 ⸻
 
-📡 Fluxo de endpoints da API
+📡 Endpoints da API
 
-POST v1/user
-Cria um novo usuário (obs: Apenas usuários do tipo professor terão acesso a todas rotas).
+👤 Autenticação e Cadastro
+
+POST /v1/user
+
+Cria um novo usuário.
+
+Obs: Apenas usuários com role: "professor" têm acesso às rotas protegidas de postagens.
 Body:
 {
   "username": "professor",
@@ -31,48 +36,58 @@ Body:
   "role": "professor"
 }
 
-POST v1/user/signin
-Autentica o usuário e retorna o Token
+POST /v1/user/signin
+
+Autentica o usuário e retorna um token JWT.
 Body:
 {
   "username": "professor",
   "password": "minhasenha123"
 }
 
-obs: Para as rotas a seguir o usuário deve estar autenticado via token bearer
-GET v1/post (alunos e professores)
-Lista todos os posts.
-Parâmetros de query opcionais:
-	•	page (número da página, padrão = 1)
-	•	limit (quantos posts retornar por página, padrão = 10)
+📄 Postagens (Requer token Bearer JWT)
 
-GET v1/post/:id (alunos e professores)
+GET /v1/post
+
+Lista todos os posts com paginação.
+Query params (opcional):
+	•	page (default: 1)
+	•	limit (default: 10)
+
+GET /v1/post/:id
+
 Retorna os detalhes de um post específico.
 
-GET v1/post/search?q=termo (alunos e professores)
-Busca por posts que contenham o termo no título ou conteúdo.
-Parâmetros de query opcionais:
-	•	page (número da página, padrão = 1)
-	•	limit (quantos posts retornar por página, padrão = 10)
+GET /v1/post/search?q=termo
 
-POST v1/post (professores)
-Cria um novo post (professores).
+Busca posts que contenham o termo no título ou conteúdo.
+Query params (opcional):
+	•	page (default: 1)
+	•	limit (default: 10)
+
+POST /v1/post (somente professores)
+
+Cria uma nova postagem.
 Body:
 {
-  "title": "Teste",
-  "content": "Teste",
-  "author": "Teste"
+  "title": "Título da postagem",
+  "content": "Conteúdo da postagem",
+  "author": "Nome do professor"
 }
 
-PUT v1/post/:id (professores)
+PUT /v1/post/:id (somente professores)
+
 Edita uma postagem existente.
 Body:
 {
-  "content": "Teste edição",
+  "content": "Novo conteúdo"
 }
 
-DELETE v1/post/:id (professores)
+DELETE /v1/post/:id (somente professores)
+
 Exclui uma postagem.
+
+⸻
 
 🛠️ Tecnologias Utilizadas
 	•	Node.js
@@ -80,49 +95,49 @@ Exclui uma postagem.
 	•	PostgreSQL
 	•	Docker & Docker Compose
 	•	GitHub Actions (CI/CD)
-	•	Render (deploy)
-	•	Jest (testes)
+	•	Render (Deploy)
+	•	Jest (testes unitários)
+
+⸻
 
 ⚙️ Como Executar o Projeto
 
 ▶️ Executando Localmente com Docker Compose
-1.	Clone o repositório:
-    git clone https://github.com/jpaquieli/WebClassroom.git
-
-2.	Crie o arquivo .env com as variáveis de ambiente necessárias de acordo com o .env.example
-
-3.	Suba os containers:
-    docker-compose up --build
-
-4.	A API estará exposta em:
-    http://localhost:3000
+	1.	Clone o repositório:
+git clone https://github.com/jpaquieli/WebClassroom.git
+cd WebClassroom
+	2.	Crie o arquivo .env com base no .env.example e configure as variáveis necessárias.
+	3.	Suba os containers:
+docker-compose up --build
+	4.	A API estará disponível em:
+http://localhost:3000
 
 ☁️ Ambiente de Produção (Render)
 
-O deploy automático está configurado na Render.
-	•	Variáveis de Ambiente:
-        Configure as mesmas variáveis do .env dentro da aba Environment da Render.
-	•	Deploy automático via GitHub Actions: 
-        Ao realizar push na main, o deploy é disparado automaticamente.
-	•	A aplicação está exposta na URL:
-        https://webclassroom-latest.onrender.com 
+A aplicação é implantada automaticamente na plataforma Render via GitHub Actions.
+	•	✅ Variáveis de ambiente devem ser configuradas na aba Environment do Render.
+	•	✅ Deploy é acionado automaticamente a cada push na branch main.
+	•	🌐 A aplicação está disponível em:
+https://webclassroom-latest.onrender.com
 
 🧪 Testes
 
-Execute os testes com:
-    npm test
-
+Execute os testes localmente com:
+npm test
 	•	Framework: Jest
-	•	Foco em testes de criação, edição e exclusão de postagens
-    •   Os testes fazem parte da esteira de CI do github actions
+	•	Foco em: criação, edição e exclusão de postagens
+	•	Os testes são executados automaticamente na pipeline do GitHub Actions
+
+⸻
 
 📦 CI/CD com GitHub Actions
 
-A pipeline automatiza:
-	•	Instalação de dependências
-    •	Execução das rotinas de lint
-	•	Execução dos testes
-    •	Push da imagem para o Docker Hub
-	•	Deploy (Render)
+A pipeline realiza:
+	•	🔍 Instalação de dependências
+	•	🧹 Execução das rotinas de lint
+	•	✅ Execução dos testes
+	•	📦 Push da imagem para o Docker Hub
+	•	🚀 Deploy na Render
 
-Arquivo: .github/workflows/main.yml
+Arquivo da pipeline:
+.github/workflows/main.yml
