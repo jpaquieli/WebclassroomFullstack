@@ -12,6 +12,9 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
