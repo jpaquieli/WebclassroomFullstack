@@ -12,13 +12,13 @@ jobs:
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      PORT:3000
-      NODE_ENV=development
+      PORT: 3000
+      NODE_ENV: development
       DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_HOST:localhost
+      DATABASE_HOST: localhost
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_PORT:5432
+      DATABASE_PORT: 5432
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
