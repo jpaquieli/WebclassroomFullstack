@@ -4,6 +4,8 @@ import { app } from '../app';
 import { env } from '../env';
 import { database as realDatabase } from '../lib/pg/db';
 
+const mySecret = env.JWT_SECRET;
+
 const postTeste = {
     id: 1,
     title: 'teste',
@@ -59,7 +61,7 @@ describe('Testes da API Posts', () => {
   it('deve criar um post (POST)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
-      env.JWT_SECRET || 'default_test_secret'
+      mySecret || 'default_test_secret'
     );
 
     const response = await request(app)
@@ -79,7 +81,7 @@ describe('Testes da API Posts', () => {
   it('deve retornar todos os posts com sucesso (GET)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
-      env.JWT_SECRET || 'default_test_secret'
+      mySecret || 'default_test_secret'
     );
 
     const response = await request(app)
@@ -98,7 +100,7 @@ describe('Testes da API Posts', () => {
   it('deve deletar um post com sucesso (DELETE)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
-      env.JWT_SECRET || 'default_test_secret'
+      mySecret || 'default_test_secret'
     );
 
     const response = await request(app)
@@ -113,7 +115,7 @@ describe('Testes da API Posts', () => {
   it('deve retornar um post pelo ID (GET /v1/post/:id)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
-      env.JWT_SECRET || 'default_test_secret'
+      mySecret || 'default_test_secret'
     );
 
     const response = await request(app)
@@ -129,7 +131,7 @@ describe('Testes da API Posts', () => {
   it('deve editar um post com sucesso (PUT)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
-      env.JWT_SECRET || 'default_test_secret'
+      mySecret || 'default_test_secret'
     );
 
     const response = await request(app)

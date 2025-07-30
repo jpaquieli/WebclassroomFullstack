@@ -4,6 +4,8 @@ import { app } from '../app';
 import { env } from '../env';
 import { database as realDatabase } from '../lib/pg/db';
 
+const mySecret = env.JWT_SECRET;
+
 // Mock do use case de criação de usuário
 jest.mock('../useCases/factory/makeCreateUserUseCase', () => ({
   makeCreateUserUseCase: () => ({
@@ -29,7 +31,7 @@ type MockedDatabase = typeof realDatabase & {
 
 describe('Testes da API Users', () => {
   it('deve criar usuário com dados válidos (POST)', async () => {
-    const token = jwt.sign({ username: 'teste' }, 'development');
+    const token = jwt.sign({ username: 'teste' }, mySecret);
 
     const response = await request(app)
       .post('/v1/user')
