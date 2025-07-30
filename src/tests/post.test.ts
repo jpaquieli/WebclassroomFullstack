@@ -128,14 +128,14 @@ describe('Testes da API Posts', () => {
     expect(response.body).toMatchObject(postTeste);
   });
 
-  it('deve editar um post com sucesso (PUT)', async () => {
+  it('deve editar um post com sucesso (PATCH)', async () => {
     const token = jwt.sign(
       { username: 'teste', role: 'professor' },
       mySecret || 'default_test_secret'
     );
 
     const response = await request(app)
-      .put('/v1/post/1')
+      .patch('/v1/post/1')
       .send({
         title: 'novo título',
         content: 'novo conteúdo', 
