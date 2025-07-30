@@ -29,7 +29,7 @@ type MockedDatabase = typeof realDatabase & {
 
 describe('Testes da API Users', () => {
   it('deve criar usuário com dados válidos (POST)', async () => {
-    const token = jwt.sign({ username: 'teste' }, env.JWT_SECRET);
+    const token = jwt.sign({ username: 'teste' }, 'development');
 
     const response = await request(app)
       .post('/v1/user')
