@@ -14,7 +14,7 @@ postRouter.get('/post/search', search);
 postRouter.get('/post/:id', findById);
 
 postRouter.post('/post', validateRole, create);
-postRouter.put('/post/:id', validateRole, edit);
+postRouter.patch('/post/:id', validateRole, edit);
 postRouter.delete('/post/:id', validateRole, deletePost);
 
 export default postRouter;
