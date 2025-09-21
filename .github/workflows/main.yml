@@ -44,7 +44,7 @@ jobs:
         run: npm run lint
 
       - name: Build Docker backend image
-        run: docker build -t $DOCKER_USERNAME/webclassroom-backend:latest ./src/backend
+        run: docker build -t $DOCKER_USERNAME/webclassroombackend:latest ./src/backend
 
       - name: Login to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
