@@ -6,9 +6,9 @@ COPY package.json package-lock.json ./
 
 RUN npm install
 
-COPY . .
+RUN npm rebuild esbuild
 
-RUN npm uninstall esbuild && npm install esbuild
+COPY . .
 
 RUN npm run build
 

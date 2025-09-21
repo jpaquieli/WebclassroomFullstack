@@ -12,9 +12,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  app:
-    build: .
-    container_name: webclassroom
+  backend:
+    build: ./src/backend
+    container_name: webclassroom_backend
     ports:
       - "3000:3000"
     env_file:
@@ -31,6 +31,16 @@ services:
         echo 'Banco disponível, iniciando app';
         npm start
       "
+
+  frontend:
+    build: ./src/frontend
+    container_name: webclassroom_frontend
+    ports:
+      - "5173:80"
+    env_file:
+      - .env
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
