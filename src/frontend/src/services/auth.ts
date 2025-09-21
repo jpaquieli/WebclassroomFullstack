@@ -1,6 +1,5 @@
-import api from "./api";
+import api from "./api.js";
 
-// 🔹 Tipos
 type Credentials = {
   username: string;
   password: string;
@@ -11,7 +10,7 @@ type LoginResponse = {
   user: {
     id: number;
     username: string;
-    [key: string]: any; // outros campos do usuário
+    [key: string]: any;
   };
 };
 

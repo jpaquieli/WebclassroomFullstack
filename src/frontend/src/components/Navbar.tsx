@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import { styled } from "styled-components"; 
-import { useAuth } from "../contexts/AuthContext.js"; 
+import { styled } from "styled-components";
+import { useAuth } from "../contexts/AuthContext.js";
 
-type AuthContextType = {
-  user: { id: string; name: string } | null;
-  logout: () => void;
-};
-
+// Styled Components
 const Nav = styled.nav`
   background: #2563eb;
   padding: 12px 24px;
@@ -61,10 +57,19 @@ const LogoutButton = styled.button`
   }
 `;
 
-export default function Navbar() {
-  const { user, logout } = useAuth() as AuthContextType;
+// Tipagem do usuário (ajuste conforme seu AuthContext)
+interface User {
+  role?: string;
+  [key: string]: any;
+}
 
-  if (!user) return null;
+export default function Navbar() {
+  const { user, logout, loading } = useAuth();
+
+  // Espera carregar o usuário
+  if (loading || !user) return null;
+
+  const isProfessor = user?.role?.toLowerCase() === "professor";
 
   return (
     <Nav>
@@ -73,12 +78,17 @@ export default function Navbar() {
           <li>
             <StyledLink to="/">Home</StyledLink>
           </li>
-          <li>
-            <StyledLink to="/create">Criar Post</StyledLink>
-          </li>
-          <li>
-            <StyledLink to="/admin">Admin</StyledLink>
-          </li>
+
+          {isProfessor && (
+            <>
+              <li>
+                <StyledLink to="/create">Criar Post</StyledLink>
+              </li>
+              <li>
+                <StyledLink to="/admin">Admin</StyledLink>
+              </li>
+            </>
+          )}
         </LinksGroup>
 
         <li>

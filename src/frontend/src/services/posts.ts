@@ -1,6 +1,5 @@
-const API_URL = "http://localhost:3000/v1";
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-// 🔹 Tipos
 export type Post = {
   id: number;
   title: string;
@@ -10,7 +9,6 @@ export type Post = {
   updatedAt?: string;
 };
 
-// 🔹 Funções da API
 export async function getPosts(): Promise<Post[]> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post`, {
@@ -43,7 +41,7 @@ export async function createPost(post: Omit<Post, "id">): Promise<Post> {
   });
 
   if (!res.ok) throw new Error("Erro ao criar post");
-  return res.json(); // assumindo que o backend retorna o post criado
+  return res.json();
 }
 
 export async function updatePost(

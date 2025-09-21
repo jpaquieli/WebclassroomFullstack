@@ -1,12 +1,11 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Tipagem do usuário
 export type User = {
   username: string;
   role: string;
 };
 
-// Tipagem do contexto
 type AuthContextType = {
   token: string | null;
   user: User | null;
@@ -15,12 +14,10 @@ type AuthContextType = {
   loading: boolean;
 };
 
-// Props do Provider
 type AuthProviderProps = {
   children: ReactNode;
 };
 
-// Contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -39,6 +36,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.error("Token inválido", error);
         setToken(null);
         localStorage.removeItem("token");
+        setUser(null);
       }
     } else {
       setUser(null);
@@ -47,13 +45,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [token]);
 
   const login = async (username: string, password: string) => {
-    const res = await fetch("http://localhost:3000/v1/user/signin", {
+    const res = await fetch(`${API_URL}/user/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
 
-    if (!res.ok) throw new Error("Usuário ou senha inválidos");
+    if (!res.ok) throw new Error("Usuário ou senha inválidos")
+      console.log("API_URL usada pelo frontend:", API_URL);;
 
     const data = await res.json();
     setToken(data.token);
@@ -63,6 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
@@ -72,7 +72,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 }
 
-// Hook seguro
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

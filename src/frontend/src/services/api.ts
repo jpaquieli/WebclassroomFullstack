@@ -1,6 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-// 🔹 Declaração global das variáveis de ambiente do Vite
 declare global {
   interface ImportMetaEnv {
     readonly VITE_API_BASE_URL?: string;
@@ -10,12 +9,10 @@ declare global {
   }
 }
 
-// Cria instância do Axios
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-// Interceptor para adicionar token de autenticação
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("token");

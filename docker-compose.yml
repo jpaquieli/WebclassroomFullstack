@@ -14,7 +14,7 @@ services:
 
   backend:
     build: ./src/backend
-    container_name: webclassroom_backend
+    container_name: webclassroombackend
     ports:
       - "3000:3000"
     env_file:
@@ -34,7 +34,7 @@ services:
 
   frontend:
     build: ./src/frontend
-    container_name: webclassroom_frontend
+    container_name: webclassroomfrontend
     ports:
       - "5173:80"
     env_file:
