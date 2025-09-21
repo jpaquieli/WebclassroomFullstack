@@ -32,19 +32,19 @@ jobs:
           node-version: 18
 
       - name: Install dependencies backend
-        run: cd src/backend
+        working-directory: src/backend
         run: npm install
 
       - name: Install dependencies frontend
-        run: cd src/frontend
+        working-directory: src/frontend
         run: npm install
 
       - name: Lint
-        run: cd src/backend
+        working-directory: src/backend
         run: npm run lint
 
       - name: Unit tests
-        run: cd src/backend
+        working-directory: src/backend
         run: npm test
 
       - name: Build Docker backend image
