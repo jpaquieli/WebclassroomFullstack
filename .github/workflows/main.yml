@@ -31,13 +31,20 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install dependencies backend
+        run: cd src/backend
+        run: npm install
+
+      - name: Install dependencies frontend
+        run: cd src/frontend
         run: npm install
 
       - name: Lint
+        run: cd src/backend
         run: npm run lint
 
       - name: Unit tests
+        run: cd src/backend
         run: npm test
 
       - name: Build Docker backend image
@@ -48,3 +55,9 @@ jobs:
 
       - name: Push Docker image
         run: docker push $DOCKER_USERNAME/webclassroombackend:latest
+
+      - name: Build Docker frontend image
+        run: docker build -t $DOCKER_USERNAME/webclassroom-frontend:latest ./src/frontend
+
+      - name: Push Docker frontend image
+        run: docker push $DOCKER_USERNAME/webclassroom-frontend:latest
