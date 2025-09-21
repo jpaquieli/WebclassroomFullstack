@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { usePosts } from "../contexts/PostsContext";
+import { styled } from "styled-components";
+import { usePosts, Post } from "../contexts/PostsContext.js";
 
 // Styled Components
 const PageWrapper = styled.div`
@@ -17,15 +17,22 @@ const Container = styled.div`
   padding: 0 16px;
 `;
 
-const Card = styled.div`
-  max-width: ${(props) => props.maxWidth || "700px"};
+interface CardProps {
+  maxWidth?: string;
+  padding?: string;
+  textAlign?: string;
+  fontStyle?: string;
+}
+
+const Card = styled.div<CardProps>`
+  max-width: ${(props: CardProps) => props.maxWidth || "700px"};
   margin: 0 auto;
   background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  padding: ${(props) => props.padding || "30px 25px"};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: ${(props: CardProps) => props.padding || "30px 25px"};
   border-radius: 12px;
-  text-align: ${(props) => props.textAlign || "left"};
-  font-style: ${(props) => props.fontStyle || "normal"};
+  text-align: ${(props: CardProps) => props.textAlign || "left"};
+  font-style: ${(props: CardProps) => props.fontStyle || "normal"};
 `;
 
 const Header = styled.h2`
@@ -132,20 +139,20 @@ const LoadingWrapper = styled.div`
 `;
 
 export default function EditPostPage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { getPost, updatePost } = usePosts();
   const nav = useNavigate();
 
-  const [post, setPost] = useState(null);
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [post, setPost] = useState<Post | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (id) {
-      getPost(id).then((p) => {
+      getPost(Number(id)).then((p) => {
         if (p) {
           setPost(p);
           setTitle(p.title);
@@ -165,13 +172,21 @@ export default function EditPostPage() {
 
     setError("");
 
-    await updatePost(id, { title, author, content });
+    if (id) await updatePost(Number(id), { title, author, content });
 
-    const updatedPost = { ...post, title, author, content };
-    setPost(updatedPost);
+    setPost((prev: Post | null) =>
+      prev ? { ...prev, title, author, content } : prev
+    );
 
     nav("/admin");
   };
+
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) =>
+    setTitle(e.target.value);
+  const handleChangeAuthor = (e: ChangeEvent<HTMLInputElement>) =>
+    setAuthor(e.target.value);
+  const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) =>
+    setContent(e.target.value);
 
   if (loading) {
     return (
@@ -206,13 +221,13 @@ export default function EditPostPage() {
             <StyledInput
               placeholder="Título"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleChangeTitle}
             />
             <StyledTextarea
               placeholder="Conteúdo"
               rows={6}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={handleChangeContent}
             />
 
             <Actions>

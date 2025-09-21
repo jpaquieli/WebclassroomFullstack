@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { styled } from "styled-components";
+import { useAuth } from "../contexts/AuthContext.js";
 
 // Styled Components
 const PageWrapper = styled.div`
@@ -66,7 +66,11 @@ const StyledInput = styled.input`
   }
 `;
 
-const StyledButton = styled.button`
+interface ButtonProps {
+  disabled?: boolean;
+}
+
+const StyledButton = styled.button<ButtonProps>`
   width: 80%;
   margin-top: 10px;
   padding: 8px 12px;
@@ -75,7 +79,6 @@ const StyledButton = styled.button`
   font-size: 0.95rem;
   color: white;
   background: #3b82f6;
-  cursor: pointer;
   transition: background 0.2s ease;
   opacity: ${(props) => (props.disabled ? 0.7 : 1)};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
@@ -86,15 +89,15 @@ const StyledButton = styled.button`
 `;
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!username.trim() || !password.trim()) {
@@ -115,6 +118,9 @@ export default function LoginPage() {
     }
   };
 
+  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
   return (
     <PageWrapper>
       <Container>
@@ -128,14 +134,14 @@ export default function LoginPage() {
               type="text"
               placeholder="Usuário"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleUsernameChange}
             />
 
             <StyledInput
               type="password"
               placeholder="Senha"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
             />
 
             <StyledButton type="submit" disabled={loading}>

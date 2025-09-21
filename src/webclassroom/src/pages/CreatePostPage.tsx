@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { usePosts } from "../contexts/PostsContext";
+import { styled } from "styled-components";
+import { usePosts, Post } from "../contexts/PostsContext.js";
 
 // Styled Components
 const PageWrapper = styled.div`
@@ -128,11 +128,11 @@ export default function CreatePostPage() {
   const { createPost } = usePosts();
   const nav = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSave = async () => {
     if (!title.trim() || !author.trim() || !content.trim()) {
@@ -157,7 +157,8 @@ export default function CreatePostPage() {
     }
   };
 
-  const isDisabled = !title.trim() || !author.trim() || !content.trim() || loading;
+  const isDisabled =
+    !title.trim() || !author.trim() || !content.trim() || loading;
 
   return (
     <PageWrapper>

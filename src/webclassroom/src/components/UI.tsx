@@ -1,8 +1,7 @@
-// src/components/UI.jsx
-import styled from "styled-components";
+import { styled } from "styled-components"; // ✅ Import correto no styled-components v6
 
-// Cores e estilos base
-const colors = {
+// 🎨 Paleta de cores centralizada
+export const colors = {
   primary: "#2563eb",
   primaryHover: "#1e40af",
   border: "#e5e7eb",
@@ -10,7 +9,7 @@ const colors = {
   text: "#111827",
 };
 
-// Container
+// 📦 Container genérico
 export const Container = styled.div`
   padding: 24px;
   max-width: 900px;
@@ -19,23 +18,23 @@ export const Container = styled.div`
   color: ${colors.text};
 `;
 
-// Card
+// 🪪 Card reutilizável
 export const Card = styled.div`
   padding: 20px;
   border: 1px solid ${colors.border};
   border-radius: 12px;
   background: ${colors.background};
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 `;
 
-// Input
+// 🔤 Input genérico
 export const Input = styled.input`
   padding: 10px 12px;
   width: 100%;
@@ -52,7 +51,7 @@ export const Input = styled.input`
   }
 `;
 
-// Textarea
+// 📝 Textarea genérica
 export const Textarea = styled.textarea`
   padding: 10px 12px;
   width: 100%;
@@ -70,7 +69,7 @@ export const Textarea = styled.textarea`
   }
 `;
 
-// Button
+// 🔘 Botão reutilizável
 export const Button = styled.button`
   padding: 10px 16px;
   background: ${colors.primary};

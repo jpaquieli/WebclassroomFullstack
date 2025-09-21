@@ -1,10 +1,33 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-const AuthContext = createContext({});
+// Tipagem do usuário
+export type User = {
+  username: string;
+  role: string;
+};
 
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [user, setUser] = useState(null);
+// Tipagem do contexto
+type AuthContextType = {
+  token: string | null;
+  user: User | null;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
+  loading: boolean;
+};
+
+// Props do Provider
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+// Contexto
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token") || null
+  );
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,13 +46,15 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, [token]);
 
-  const login = async (username, password) => {
+  const login = async (username: string, password: string) => {
     const res = await fetch("http://localhost:3000/v1/user/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
+
     if (!res.ok) throw new Error("Usuário ou senha inválidos");
+
     const data = await res.json();
     setToken(data.token);
     localStorage.setItem("token", data.token);
@@ -47,4 +72,11 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+// Hook seguro
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+  }
+  return context;
+};

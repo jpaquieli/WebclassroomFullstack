@@ -1,28 +1,37 @@
 const API_URL = "http://localhost:3000/v1";
 
-export async function getPosts() {
+// 🔹 Tipos
+export type Post = {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+// 🔹 Funções da API
+export async function getPosts(): Promise<Post[]> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!res.ok) throw new Error("Erro ao buscar posts");
-
   return res.json();
 }
 
-export async function getPost(id) {
+export async function getPost(id: number): Promise<Post> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!res.ok) throw new Error("Erro ao buscar post");
-
   return res.json();
 }
 
-export async function createPost(post) {
+export async function createPost(post: Omit<Post, "id">): Promise<Post> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post`, {
     method: "POST",
@@ -34,11 +43,13 @@ export async function createPost(post) {
   });
 
   if (!res.ok) throw new Error("Erro ao criar post");
-
-  return res.text(); // backend retorna texto, não JSON
+  return res.json(); // assumindo que o backend retorna o post criado
 }
 
-export async function updatePost(id, post) {
+export async function updatePost(
+  id: number,
+  post: Partial<Omit<Post, "id">>
+): Promise<Post> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post/${id}`, {
     method: "PATCH",
@@ -50,11 +61,10 @@ export async function updatePost(id, post) {
   });
 
   if (!res.ok) throw new Error("Erro ao atualizar post");
-
   return res.json();
 }
 
-export async function deletePost(id) {
+export async function deletePost(id: number): Promise<void> {
   const token = localStorage.getItem("token");
   const res = await fetch(`${API_URL}/post/${id}`, {
     method: "DELETE",
@@ -62,6 +72,4 @@ export async function deletePost(id) {
   });
 
   if (!res.ok) throw new Error("Erro ao deletar post");
-
-  return res.text();
 }

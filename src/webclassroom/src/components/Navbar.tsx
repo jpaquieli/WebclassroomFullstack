@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useAuth } from "../contexts/AuthContext.jsx";
+import { styled } from "styled-components"; 
+import { useAuth } from "../contexts/AuthContext.js"; 
+
+type AuthContextType = {
+  user: { id: string; name: string } | null;
+  logout: () => void;
+};
 
 const Nav = styled.nav`
   background: #2563eb;
@@ -57,9 +62,9 @@ const LogoutButton = styled.button`
 `;
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth() as AuthContextType;
 
-  if (!user) return null; // Navbar não aparece se não estiver logado
+  if (!user) return null;
 
   return (
     <Nav>

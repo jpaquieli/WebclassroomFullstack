@@ -1,6 +1,7 @@
 .env
 /node_modules
 /coverage
+/src/webclassroom/node_modules
 # Logs
 logs
 *.log

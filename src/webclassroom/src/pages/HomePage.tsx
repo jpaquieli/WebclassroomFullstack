@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { usePosts } from "../contexts/PostsContext";
+import { usePosts, Post } from "../contexts/PostsContext";
 import { Container } from "../components/UI";
 
-// Styled Components mantendo o mesmo estilo
+// Styled Components
 const PageWrapper = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
@@ -79,8 +79,8 @@ const Message = styled.p`
 
 export default function HomePage() {
   const { posts, fetchPosts } = usePosts();
-  const [q, setQ] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [q, setQ] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -91,6 +91,10 @@ export default function HomePage() {
     loadPosts();
   }, [fetchPosts]);
 
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQ(e.target.value);
+  };
+
   if (loading || !posts) {
     return (
       <PageWrapper>
@@ -99,7 +103,7 @@ export default function HomePage() {
     );
   }
 
-  const filtered = posts.filter((p) =>
+  const filtered: Post[] = posts.filter((p) =>
     (p.title + p.content + p.author).toLowerCase().includes(q.toLowerCase())
   );
 
@@ -112,7 +116,7 @@ export default function HomePage() {
           <SearchInput
             placeholder="🔎 Buscar por título, autor ou conteúdo"
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={handleSearchChange}
           />
         </SearchWrapper>
 
@@ -126,7 +130,7 @@ export default function HomePage() {
               </h3>
               <PostAuthor>👨‍🏫 {p.author}</PostAuthor>
               <PostContent>
-                {p.content.length > 120 ? p.content.slice(0, 120) + "..." : p.content}
+                {p.content.length > 120 ? `${p.content.slice(0, 120)}...` : p.content}
               </PostContent>
             </PostCard>
           ))

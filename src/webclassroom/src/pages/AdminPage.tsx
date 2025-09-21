@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { usePosts } from "../contexts/PostsContext";
+import { styled } from "styled-components";
+import { usePosts, Post } from "../contexts/PostsContext.js";
 
 // Styled Components
 const PageWrapper = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
   padding: 20px 0 40px;
-  font-family: sans-serif; /* Mantém mesma fonte do código original */
+  font-family: sans-serif;
 `;
 
 const Container = styled.div`
@@ -81,7 +81,7 @@ const Message = styled.p`
 `;
 
 export default function AdminPage() {
-  const { posts = [], fetchPosts, deletePost } = usePosts();
+  const { posts, fetchPosts, deletePost } = usePosts();
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -94,7 +94,7 @@ export default function AdminPage() {
     loadPosts();
   }, [fetchPosts]);
 
-  const handleDelete = async (id, title) => {
+  const handleDelete = async (id: number, title: string) => {
     if (window.confirm(`Tem certeza que deseja excluir "${title}"?`)) {
       await deletePost(id);
     }
@@ -116,7 +116,7 @@ export default function AdminPage() {
         {posts.length === 0 ? (
           <Message>Nenhum post encontrado. Crie um novo para começar!</Message>
         ) : (
-          posts.map((p) => (
+          posts.map((p: Post) => (
             <PostCard key={p.id}>
               <PostTitle>{p.title}</PostTitle>
               <PostContent>
