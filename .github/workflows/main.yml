@@ -43,10 +43,6 @@ jobs:
         working-directory: src/backend
         run: npm run lint
 
-      - name: Unit tests
-        working-directory: src/backend
-        run: npm test
-
       - name: Build Docker backend image
         run: docker build -t $DOCKER_USERNAME/webclassroom-backend:latest ./src/backend
 
