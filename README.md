@@ -1,32 +1,68 @@
-📚 WebClassroom
+# 📚 WebClassroom
 
-📝 Descrição do Projeto
+## 📝 Descrição do Projeto
 
-A WebClassroom foi desenvolvida para atender à demanda de professores da rede pública que não possuem ferramentas acessíveis para compartilhar conteúdos com seus alunos.
+A **WebClassroom** foi desenvolvida para atender à demanda de professores da rede pública que não possuem ferramentas acessíveis para compartilhar conteúdos com seus alunos.
 
-Com foco em tecnologia acessível, escalabilidade e praticidade, a aplicação oferece uma interface segura e moderna para postagem e leitura de conteúdos educacionais.
+Com foco em **tecnologia acessível**, **escalabilidade** e **praticidade**, a aplicação oferece uma interface segura e moderna para **postagem e leitura de conteúdos educacionais**.
 
-🚀 Funcionalidades
-	•	✅ Criação de usuários dos tipos professor e aluno
-	•	✅ Login de usuários via JWT
-	•	✅ Listagem de posts (alunos e professores)
-	•	✅ Leitura detalhada de um post (alunos e professores)
-	•	✅ Busca por título ou conteúdo (alunos e professores)
-	•	✅ Criação de postagens (apenas professores)
-	•	✅ Edição de postagens (apenas professores)
-	•	✅ Exclusão de postagens (apenas professores)
+---
 
-📡 Endpoints da API
+## 🚀 Funcionalidades
 
-👤 Autenticação e Cadastro
+- ✅ Criação de usuários dos tipos **professor** e **aluno**
+- ✅ Login de usuários via **JWT**
+- ✅ Listagem de posts (alunos e professores)
+- ✅ Leitura detalhada de um post (alunos e professores)
+- ✅ Busca por título ou conteúdo (alunos e professores)
+- ✅ Criação de postagens (apenas professores)
+- ✅ Edição de postagens (apenas professores)
+- ✅ Exclusão de postagens (apenas professores)
 
-POST /v1/user
+---
 
-Cria um novo usuário.
+## 🏛 Arquitetura do Sistema (Frontend)
 
-Obs: Apenas usuários com role: "professor" têm acesso às rotas protegidas de postagens.
-Body:
+O frontend da **WebClassroom** foi desenvolvido com **React + TypeScript**, utilizando **Vite** como bundler, e adota uma arquitetura baseada em **componentes reutilizáveis** e **context API** para gerenciamento de estado global.
 
+### Estrutura:
+
+- **pages/**: telas da aplicação (Home, Login, PostView, Dashboard do professor)
+- **components/**: componentes reutilizáveis (Cards, Botões, Inputs, Containers)
+- **contexts/**: gerencia o estado global, incluindo `AuthContext` e `PostsContext`
+- **services/**: integração com a API (login, posts CRUD)
+- **styles/**: estilos globais e temas
+- **App.tsx**: roteamento principal com `react-router-dom`
+- **Vite**: bundler moderno, rápido e otimizado
+
+### Fluxo de Uso da Aplicação:
+
+1. **Login/Autenticação:**  
+   O usuário realiza login via JWT. Professores possuem acesso a rotas administrativas.
+
+2. **Listagem de Posts:**  
+   Alunos e professores podem visualizar os últimos posts. O sistema suporta busca por título, conteúdo ou autor.
+
+3. **Visualização Detalhada:**  
+   Ao clicar em um post, o usuário visualiza o conteúdo completo em uma página dedicada.
+
+4. **Gestão de Postagens (Professores):**  
+   Professores podem criar, editar e excluir postagens. O frontend valida campos obrigatórios e controla o estado de loading.
+
+5. **Responsividade e UX:**  
+   Layouts flexíveis e estilizados com **Styled Components**, garantindo boa experiência em desktop e mobile.
+
+---
+
+## 📡 Endpoints da API
+
+### 👤 Autenticação e Cadastro
+
+#### `POST /v1/user`  
+Cria um novo usuário.  
+> **Obs:** Apenas usuários com `role: "professor"` têm acesso às rotas protegidas de postagens.  
+**Body:**
+```json
 {
   "username": "professor",
   "password": "minhasenha123",
