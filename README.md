@@ -144,25 +144,29 @@ Exclui uma postagem.
 ⚙️ Como Executar o Projeto
 
 ▶️ Executando Localmente com Docker Compose
-	1.	Clone o repositório:
 
-git clone https://github.com/jpaquieli/WebClassroomFullstack.git
+1. Clone o repositório:
+```bash
+git clone https://github.com/jpaquieli/WebClassroom.git
+cd WebClassroom
+```
 
-cd WebClassroomFullstack
+2. Crie o arquivo `.env` com base no `.env.example` e configure as variáveis necessárias.
 
-	2.	Crie o arquivo .env com base no .env.example e configure as variáveis necessárias.
-	3.	Suba os containers:
-
+3. Suba os containers:
+```bash
 docker-compose up --build
+```
 
-	4.	A API estará disponível em:
-
+4. A API estará disponível em:
+```
 http://localhost:3000
+```
 
-O frontend estará disponível em:
-
+5. A Front estará disponível em:
+```
 http://localhost:5173
-
+```
 
 ⸻
 
