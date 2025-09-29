@@ -147,6 +147,7 @@ Exclui uma postagem.
 	1.	Clone o repositório:
 
 git clone https://github.com/jpaquieli/WebClassroomFullstack.git
+
 cd WebClassroomFullstack
 
 	2.	Crie o arquivo .env com base no .env.example e configure as variáveis necessárias.
