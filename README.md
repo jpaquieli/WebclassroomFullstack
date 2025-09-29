@@ -163,7 +163,7 @@ docker-compose up --build
 http://localhost:3000
 ```
 
-5. A Front estará disponível em:
+5. O Front estará disponível em:
 ```
 http://localhost:5173
 ```
