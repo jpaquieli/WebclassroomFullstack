@@ -148,22 +148,38 @@ Exclui uma postagem.
 1. Clone o repositório:
 ```bash
 git clone https://github.com/jpaquieli/WebClassroomFullstack.git
+```
+```bash
 cd WebClassroomFullstack
 ```
 
 2. Crie o arquivo `.env` com base no `.env.example` e configure as variáveis necessárias.
 
-3. Suba os containers:
+3. Instalar dependências
+```bash
+cd /src/backend
+```
+```bash
+npm i
+```
+```bash
+cd /src/frontend
+```
+```bash
+npm i
+```
+
+4. Suba os containers:
 ```bash
 docker-compose up --build
 ```
 
-4. A API estará disponível em:
+5. A API estará disponível em:
 ```
 http://localhost:3000
 ```
 
-5. O Front estará disponível em:
+6. O Front estará disponível em:
 ```
 http://localhost:5173
 ```
